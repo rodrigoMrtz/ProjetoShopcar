@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>Ola's Mundo!</title>
+    </head>
+    <body>
+	<div><a href='../admin'>Administrador</a>
+
+        <div>
+	    <h1><a href="/">Django's Tcc From Hell</a></h1>
+	</div>
+
+
+        {% for veiculo in veiculos %}
+	    <div>
+		<p>Veiculo: {{ veiculo.modelo}}</p>
+		<p>Preço: {{ veiculo.preco}}</p>
+	    </div>
+	{% endfor %}
+    </body>
+</html>

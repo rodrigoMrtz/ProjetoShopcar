@@ -2,7 +2,7 @@
 # -*- coding: iso-8859-15 -*-
 from scraper import Scraper
 import urllib3, lxml.html
-from Tkinter import *
+from datetime import datetime
 from models import Veiculo, Marca, Opcionais, VeiculoOpcionais
 from consulta import Consulta
 
@@ -51,7 +51,6 @@ def salva(url_veiculo):
         m = Marca.objects.get(nome=resultados[0])
     print("Xpath modelo...")
     resultados = scraper.pega_lista(url_veiculo, xpath_modelo)
-    print(resultados[0])
     v.modelo = resultados[0]
     print("Xpath Especificos...")
     resultados = scraper.pega_lista(url_veiculo, xpath_especs)
@@ -91,9 +90,21 @@ def salva(url_veiculo):
             print("Erro na associacao veiculo aos opcionais")
     print("Terminado.")
 
-resp = raw_input("Deseja realizar o procedimento de webscraping? 1 - SIM 2 - NÃO: ")
-if(resp == "SIM"):
-    arq = open("/home/rodrigo/Área de Trabalho/TCC/WebScrap_Python/Marcas.txt", "r")
-    for linha in arq:
-        pesquisa(linha.strip())
-    arq.close()
+
+arq = open("/home/rodrigo/Área de Trabalho/TCC/WebScrap_Python/Marcas.txt", "r")
+tempo = open("/home/rodrigo/tempo_shopcar.txt", "w")
+inicio = "Inicio: "+ str(datetime.now())
+tempo.write(inicio)
+tempo.close()
+print(datetime.now())
+for linha in arq:
+    pesquisa(linha.strip())
+final = "Final: "+ str(datetime.now())
+arq.close()
+tempo = open("/home/rodrigo/tempo_shopcar.txt", "r")
+texto = tempo.readlines()
+texto.append(final)
+tempo = open("/home/rodrigo/tempo_shopcar.txt", "w")
+tempo.writelines(texto)
+tempo.close()
+print("Fim do processo: ",final )

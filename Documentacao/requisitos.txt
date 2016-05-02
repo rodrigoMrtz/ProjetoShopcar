@@ -1,0 +1,10 @@
+requisitos funcionais:
+criação de gráficos estatísticos dos dados
+extração dos dados do shopcar
+consulta de veiculos por modelo e marca
+
+requisitos nao funcionais:
+webscraping dos dados
+o banco de dados do sistema deve ser atualizado quinzenalmente manter a consistencia dos dados
+o tempo de resposta das consultas não devem ultrapassar 7 segundos
+

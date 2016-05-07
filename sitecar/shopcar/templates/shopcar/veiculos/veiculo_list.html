@@ -1,0 +1,55 @@
+{% load staticfiles %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+    <title>Busca de veículos</title>
+        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    </head>
+<body>
+    <div class="col-lg-6">
+        <form class="navbar-form navbar-right" action="." method="get">
+	    <!-- campo pesquisa -->
+	    
+            <input type="text" name="pesquisar_por" type=text class="form-control" placeholder="Pesquisar por modelo...">
+                    <button class="btn btn-success form-control" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+        </form>
+    </div>
+    <br>
+    <div><h1>Lista de Veiculos <font size="3"/></h1></div>
+
+    <div>
+        <table class="table table-striped">
+	    <thead>
+		<tr>
+		    <th>Marca</th>
+		    <th>Categoria</th>
+		    <th>Modelo</th>
+		    <th>Preço</th>
+		</tr>
+	    </thead>
+	    <tbody>
+		{% for veiculo in object_list %}
+		<tr>
+		    <td>{{ veiculo.marca }}</td>
+		    <td>{{ veiculo.categoria}}</td>
+		    <td>{{ veiculo.modelo}}</td>
+
+		    {% if veiculo.preco == "-1" %}
+		        <td>Preço não informado na oferta.</td>
+		    {% else %}
+		        <td>{{ veiculo.preco }}</td>
+		    {% endif %}
+                </tr>
+		{% empty %}
+		    <p>Sem itens na lista.</p>
+		{% endfor %}
+	    </tbody>
+	</table>
+	</div>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <!-- Paginação -->
+    {% include "pagination.html" %}
+    {% endblock content %}
+</body>
+</html>

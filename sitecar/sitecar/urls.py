@@ -20,7 +20,7 @@ from django.views.generic import ListView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', 'shopcar.views.index', name='home'),
-    url(r'^index$', 'shopcar.views.index', name='home'),
+    url(r'^$', 'shopcar.views.index'),
+    url(r'^index', 'shopcar.views.index'),
     url(r'^veiculos/$', ListaVeiculo.as_view(), name='ListaVeiculo'),
 ]

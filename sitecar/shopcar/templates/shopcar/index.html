@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,19 +8,15 @@
     <!-- Bootstrap core CSS -->
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
     </head>
-    <body>
-	<div><a href='../admin'>Administrador</a>
-	<div><a href='../veiculos'>Veiculos</a>
+    {% block content %}
+    <body>	
+    <div class="container">
         <div>
-	    <h1><a href="/">Django's Tcc From Hell</a></h1>
+	    <h1><a href="../veiculos">Python Django's Tcc From Hell</a></h1>
 	</div>
-
-
-        {% for veiculo in veiculos %}
-	    <div>
-		<p>Veiculo: {{ veiculo.modelo}}</p>
-		<p>Preço: {{ veiculo.preco}}</p>
-	    </div>
-	{% endfor %}
+	
+	<p>Trabalho de Conclusão de Curso sobre o website shopcar o qual será o foco dos dados</p>
+    </div>
+    {% endblock content %}
     </body>
 </html>

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Veiculo
-from django.views.generic.list import ListView
+from django.views.generic import ListView, TemplateView
 
 def index(response):
     veiculos = Veiculo.objects.all()
@@ -19,7 +19,3 @@ class ListaVeiculo(ListView):
         if q is not None:
             v = v.filter(modelo__icontains=q)
         return v
-
-    def index(response):
-        veiculos = Veiculo.objects.all()
-        return render(response, 'shopcar/index.html', {'veiculos': veiculos})

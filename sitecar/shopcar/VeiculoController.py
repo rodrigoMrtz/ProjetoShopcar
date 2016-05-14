@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-15 -*-
 from scraper import Scraper
-import urllib3, lxml.html
+import urllib3, lxml.html, hashlib
 from datetime import datetime
 from models import Veiculo, Marca, Opcionais, VeiculoOpcionais
 from consulta import Consulta
@@ -67,9 +67,13 @@ def salva(url_veiculo):
     print("Xpath Preco...")
     resultados = scraper.pega_lista(url_veiculo, xpath_preco)
     r = resultados[0].replace("R$ ", "")
+    r = r.replace(",00", "")
+    print("preco: ", r)
     if "Consulte" in r:
-        r = -1
-    v.preco = r
+        r = None
+        v.preco = r
+    else:
+        v.preco = r
     marca = Marca.objects.get(nome=m.nome)
     print("Xpath opcionais...")
     resultados = scraper.pega_lista(url_veiculo, xpath_opcionais)
@@ -80,14 +84,20 @@ def salva(url_veiculo):
             o.save()
         except:
             print("")
-    v = Veiculo.objects.create(marca=marca, categoria=v.categoria, modelo=v.modelo, cor=v.cor, ano_modelo=v.ano_modelo, km=v.km, combustivel=v.combustivel, preco=v.preco)
-    v.save()
+    v_hash = marca.nome + v.categoria + v.modelo + v.cor + v.ano_modelo + str(v.km) + v.combustivel + str(v.preco) + ''.join(resultados)
+    v_hash = hashlib.md5(v_hash.encode('utf-8'))
+    obj_hash = str(v_hash.hexdigest())
+    try:
+        v = Veiculo.objects.create(vei_pk=obj_hash, marca=marca, categoria=v.categoria, modelo=v.modelo, cor=v.cor, ano_modelo=v.ano_modelo, km=v.km, combustivel=v.combustivel, preco=v.preco)
+        v.save()
+    except:
+        print("Veiculo ja existente no BD")
     for resultado in resultados:
         try:
             vop = VeiculoOpcionais.objects.create(veiculo=v, opcionais=Opcionais.objects.get(nome=resultado))
             vop.save()
         except:
-            print("Erro na associacao veiculo aos opcionais")
+            pass
     print("Terminado.")
 
 

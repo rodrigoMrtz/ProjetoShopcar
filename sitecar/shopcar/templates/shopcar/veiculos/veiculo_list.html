@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load humanize %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -23,28 +24,26 @@
         <table class="table table-striped">
 	    <thead>
 		<tr>
-		    <th>Marca</th>
 		    <th>Categoria</th>
 		    <th>Modelo</th>
 		    <th>Preço</th>
 		</tr>
 	    </thead>
 	    <tbody>
-		{% for veiculo in object_list %}
+		{% for v in object_list %} 
 		<tr>
-		    <td>{{ veiculo.marca }}</td>
-		    <td>{{ veiculo.categoria}}</td>
-		    <td>{{ veiculo.modelo}}</td>
-
-		    {% if veiculo.preco == "-1" %}
-		        <td>Preço não informado na oferta.</td>
+		    <td>{{ v.categoria }}</td>
+		    <td>{{ v.modelo }}</td>
+		    {% if not v.preco_min == None %}
+			<td>R$ {{ v.preco_min|floatformat:3|intcomma }} ~ {{ v.preco_max|floatformat:3|intcomma }} </td>
 		    {% else %}
-		        <td>{{ veiculo.preco }}</td>
+			<td><p>Nenhum preço informado na oferta.</p></td>
 		    {% endif %}
-                </tr>
 		{% empty %}
-		    <p>Sem itens na lista.</p>
+		    <p> Sem itens na lista.</p>
+		</tr>
 		{% endfor %}
+		
 	    </tbody>
 	</table>
 	</div>

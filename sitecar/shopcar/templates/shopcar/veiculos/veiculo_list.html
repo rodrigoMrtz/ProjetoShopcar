@@ -24,6 +24,7 @@
         <table class="table table-striped">
 	    <thead>
 		<tr>
+		    <th>Marca</th>
 		    <th>Categoria</th>
 		    <th>Modelo</th>
 		    <th>Preço</th>
@@ -32,8 +33,9 @@
 	    <tbody>
 		{% for v in object_list %} 
 		<tr>
-		    <td>{{ v.categoria }}</td>
-		    <td>{{ v.modelo }}</td>
+		    <td><a href="{% url 'graficos' param=v.marca %}">{{ v.marca }}</a></td>
+		    <td><a href="{% url 'graficos' param=v.categoria %}">{{ v.categoria }}</a></td>
+		    <td><a href="{% url 'graficos' param=v.modelo %}">{{ v.modelo }}</a></td>
 		    {% if not v.preco_min == None %}
 			<td>R$ {{ v.preco_min|floatformat:3|intcomma }} ~ {{ v.preco_max|floatformat:3|intcomma }} </td>
 		    {% else %}
@@ -43,7 +45,6 @@
 		    <p> Sem itens na lista.</p>
 		</tr>
 		{% endfor %}
-		
 	    </tbody>
 	</table>
 	</div>

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+    <head>
+	{% load staticfiles %}
+	{% block title %}
+	    <title>Gráficos Estatísticos</title>
+	{% endblock title %}
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    </head>
+    {% block content %}
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/highcharts.js' %}"></script>
+    {% load chartit %}
+    {{ cht|load_charts:"container" }}
+    <body>
+	<div id="container">Gráfico</div>
+    </body>
+    {% endblock content %}
+</html>

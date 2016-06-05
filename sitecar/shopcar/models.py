@@ -22,7 +22,7 @@ class Veiculo(models.Model):
     ano_modelo = models.CharField(max_length=10)
     km = models.CharField(max_length=20)
     combustivel = models.CharField(max_length=20)
-    preco = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    preco = models.DecimalField(max_digits=10, decimal_places=3, null=True)
 
     def __str__(self):
         return self.modelo
@@ -30,3 +30,16 @@ class Veiculo(models.Model):
 class VeiculoOpcionais(models.Model):
     veiculo = models.ForeignKey(Veiculo, null = False)
     opcionais = models.ForeignKey('Opcionais', null = True)
+
+class VeiculoConsulta(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    marca = models.ForeignKey(Marca, on_delete=models.DO_NOTHING)
+    categoria = models.CharField(max_length=100, null=True)
+    modelo = models.CharField(max_length=100, null=False)
+    ano_modelo = models.CharField(max_length=10)
+    preco_min = models.DecimalField(max_digits=5, decimal_places=3, null=True)
+    preco_max = models.DecimalField(max_digits=5, decimal_places=3, null=True)
+
+class Meta:
+    managed = False
+    db_table= 'shopcar_veiculoconsulta'

@@ -24,7 +24,7 @@ def pesquisa(end):
             print("Acabou os veiculos desta categoria.")
             break
         numPag = numPag + 1
-        
+
 def salva(url_veiculo):
     xpath_categoria = "//*[contains(@class, 'categoria')]/a//text()"
     xpath_marca = "//*[contains(@class, 'marca')]/text()"

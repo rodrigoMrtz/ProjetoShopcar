@@ -25,6 +25,24 @@ def pesquisa(end):
             break
         numPag = numPag + 1
 
+def formata_ano_modelo(resultados):
+    ano = resultados[0:2]
+    modelo = resultados[3:5]
+    data = str(datetime.now().year)
+    atual = int(data[2:4])
+    if int(ano) <= atual:
+        ano = "20"+ano
+        modelo = "20"+modelo
+    elif int(ano) > atual:
+        if int(modelo) <= atual:
+            modelo = "20"+modelo
+        else:
+            modelo = "19"+modelo
+        ano = "19"+ano
+    ano_modelo = ano+"/"+modelo
+    print("Ano/modelo: ",ano_modelo)
+    return ano_modelo
+
 def salva(url_veiculo):
     xpath_categoria = "//*[contains(@class, 'categoria')]/a//text()"
     xpath_marca = "//*[contains(@class, 'marca')]/text()"
@@ -55,12 +73,12 @@ def salva(url_veiculo):
     print("Xpath Especificos...")
     resultados = scraper.pega_lista(url_veiculo, xpath_especs)
     if (len(resultados) > 3):
-        v.ano_modelo = resultados[0]
+        v.ano_modelo = formata_ano_modelo(resultados[0])
         v.cor = resultados[1]
         v.km = resultados[2]
         v.combustivel = resultados[3]
     elif (len(resultados) == 3):
-        v.ano_modelo = resultados[0]
+        v.ano_modelo = formata_ano_modelo(resultados[0])
         v.cor = resultados[1]
         v.km = -1
         v.combustivel = resultados[2]
@@ -101,20 +119,7 @@ def salva(url_veiculo):
     print("Terminado.")
 
 
-arq = open("/home/rodrigo/Área de Trabalho/TCC/WebScrap_Python/Marcas.txt", "r")
-tempo = open("/home/rodrigo/tempo_shopcar.txt", "w")
-inicio = "Inicio: "+ str(datetime.now())
-tempo.write(inicio)
-tempo.close()
-print(datetime.now())
+arq = open("/home/rodrigo/TCCWeb/sitecar/shopcar/Marcas.txt", "r")
+
 for linha in arq:
     pesquisa(linha.strip())
-final = "Final: "+ str(datetime.now())
-arq.close()
-tempo = open("/home/rodrigo/tempo_shopcar.txt", "r")
-texto = tempo.readlines()
-texto.append(final)
-tempo = open("/home/rodrigo/tempo_shopcar.txt", "w")
-tempo.writelines(texto)
-tempo.close()
-print("Fim do processo: ",final )

@@ -19,7 +19,7 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Configuração do diretório dos arquivos estáticos para o Heroku.
+# Configuracao do diretorio dos arquivos estaticos para o Heroku.
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # Quick-start development settings - unsuitable for production
@@ -44,9 +44,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'debug_toolbar',
     'shopcar',
     'chartit',
-    'haystack',
 )
 
 HAYSTACK_CONNECTIONS = {
@@ -104,10 +104,10 @@ DATABASES = {
     }
 }
 
-# Configuração do banco de dados para o Heroku.
-# Atualiza o banco com base na variável $DATABASE_URL.
+# Configuracao do banco de dados para o Heroku.
+# Atualiza o banco com base na variavel $DATABASE_URL.
 # $DATABASE_URL pode ser configurado pela interface web
-# na sessão settings > Config Variables.
+# na sessao settings > Config Variables.
 # Basta colocar o caminho do banco de dados no Heroku.
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
@@ -148,15 +148,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/shopcar/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# Locais extra onde procurar os arquivos estáticos.
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
-)
+# Locais extra onde procurar os arquivos estaticos.
+#STATICFILES_DIRS = (
+#    os.path.join(PROJECT_ROOT, 'static'),
+#)
 
-# Servidor de arquivos estáticos, por padrão o Django não lida com
-# arquivos estáticos, isso será feito pelo Whitenoise.
+# Servidor de arquivos estaticos, por padrao o Django nao lida com
+# arquivos estaticos, isso sera feito pelo Whitenoise.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'

@@ -9,16 +9,14 @@
         <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
     </head>
 <body>
-    <!-- Menu -->
-    
-        <form class="navbar-form" action="." method="get">
-	    <!-- campo pesquisa -->
-            <input type="text" name="pesquisar_por" type=text class="form-control" placeholder="Pesquisar por modelo...">
-                    <button class="btn btn-success form-control" type="submit"><span class="glyphicon glyphicon-search"></span></button>
-        </form>
-    </div>
+    <form class="navbar-form" action="." method="get">
+	<!-- campo pesquisa -->
+        <td>Modelo: </td><input type="text" name="pesquisar_por_modelo" type=text class="form-control" placeholder="Pesquisar por modelo...">
+            <button class="btn btn-success form-control" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+    </form>
+</div>
     <br>
-    <div><h1>Lista de Veiculos <font size="3"/></h1></div>
+    <div><h1>Lista de Veículos <font size="3"/></h1></div>
 
     <div>
         <table class="table table-striped">
@@ -35,7 +33,7 @@
 		<tr>
 		    <td><a href="{% url 'graficos' param=v.marca %}">{{ v.marca }}</a></td>
 		    <td><a href="{% url 'graficos' param=v.categoria %}">{{ v.categoria }}</a></td>
-		    <td><a href="{% url 'graficos' param=v.modelo %}">{{ v.modelo }}</a></td>
+		    <td><a href="{% url 'graficos' param=v.modelo %}" target="_blank">{{ v.modelo }}</a></td>
 		    {% if not v.preco_min == None %}
 			<td>R$ {{ v.preco_min|floatformat:3|intcomma }} ~ {{ v.preco_max|floatformat:3|intcomma }} </td>
 		    {% else %}

@@ -1,9 +1,16 @@
-import datetime
 from haystack import indexes
-from shopcar.models import Veiculo
+from .models import VeiculoBusca
 
 class VeiculoIndex(indexes.SearchIndex, indexes.Indexable):
-    texto_modelo = indexes.CharField(document=True, model_attr='modelo')
+    text = indexes.CharField(document=True, use_template=True)
+    modelo = indexes.CharField(model_attr='modelo')
+    marca = indexes.CharField(model_attr='marca')
+    categoria = indexes.CharField(model_attr='categoria')
+    preco_min = indexes.CharField(model_attr='preco_min', null=True)
+    preco_max = indexes.CharField(model_attr='preco_max', null=True)
     
     def get_model(self):
-        return Veiculo
+        return VeiculoBusca
+
+    def index_queryset(self, using=None):
+        return self.get_model().objects.all()

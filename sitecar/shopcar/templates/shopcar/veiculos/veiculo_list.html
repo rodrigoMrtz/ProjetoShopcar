@@ -9,10 +9,10 @@
         <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
     </head>
 <body>
-    <form class="navbar-form" action="." method="get">
+    <form class="navbar-form" action="." type="get">
 	<!-- campo pesquisa -->
-        <td>Modelo: </td><input type="text" name="pesquisar_por_modelo" type=text class="form-control" placeholder="Pesquisar por modelo...">
-            <button class="btn btn-success form-control" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+        <input type="text" name="q" type=text class="form-control" placeholder="Informe sua busca aqui...">
+            <button class="btn btn-success form-control" type="submit"><span class="glyphicon glyphicon-search">Pesquisar</span></button>
     </form>
 </div>
     <br>
@@ -48,7 +48,7 @@
 	</div>
     <script src="{% static 'js/bootstrap.js' %}"></script>
     <!-- Paginação -->
-    {% include "pagination.html" %}
+    {% include "_pagination.html" %}
     {% endblock content %}
 </body>
 </html>

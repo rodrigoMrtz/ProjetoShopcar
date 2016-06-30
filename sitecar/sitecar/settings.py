@@ -47,6 +47,8 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'shopcar',
     'chartit',
+    'sslserver',
+    'haystack',
 )
 
 HAYSTACK_CONNECTIONS = {
@@ -56,6 +58,8 @@ HAYSTACK_CONNECTIONS = {
         'INDEX_NAME': 'haystack',
     },
 }
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -89,6 +93,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sitecar.wsgi.application'
 
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+#Redirecionar tráfego http para https
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases

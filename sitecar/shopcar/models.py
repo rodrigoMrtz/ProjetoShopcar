@@ -43,3 +43,15 @@ class VeiculoConsulta(models.Model):
 class Meta:
     managed = False
     db_table= 'shopcar_veiculoconsulta'
+
+class VeiculoBusca(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    marca = models.ForeignKey(Marca, on_delete=models.DO_NOTHING)
+    categoria = models.CharField(max_length=100, null=True)
+    modelo = models.CharField(max_length=100, null=False)
+    preco_min = models.DecimalField(max_digits=5, decimal_places=3, null=True)
+    preco_max = models.DecimalField(max_digits=5, decimal_places=3, null=True)
+
+class Meta:
+    managed = False
+    db_table = 'shopcar_veiculobusca'

@@ -1,10 +1,8 @@
 from django.shortcuts import render_to_response
-from django.db.models import Min, Max
 from .models import Veiculo, Marca, VeiculoConsulta
 from django.views.generic import ListView, TemplateView
 from chartit import DataPool, Chart
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render
+from .forms import VeiculosSearchForm
 
 
 def graficos(request, param):
@@ -48,29 +46,12 @@ def index(request):
 class Contato(TemplateView):
     template_name= 'shopcar/contato.html'
 
-
-
 class ListaVeiculo(ListView):
     template_name = 'shopcar/veiculos/veiculo_list.html'
     model = Veiculo
     paginate_by = 15
 
     def get_queryset(self):
-        v = Veiculo.objects.select_related('marca').values('marca', 'categoria','modelo').annotate(preco_min=Min('preco'), preco_max=Max('preco')).order_by('marca', 'modelo', 'categoria')
-        v = converte_lista_marcas(v)
-        q_modelo = self.request.GET.get('pesquisar_por_modelo')
-
-        #Buscar por veiculo
-        if q_modelo is not None:
-            v = v.filter(modelo__icontains=q_modelo)
-            v = converte_lista_marcas(v)
+        form = VeiculosSearchForm(self.request.GET)
+        v = form.search()
         return v
-
-#Converte os ids para o nome da marca respectivo
-def converte_lista_marcas(veiculos):
-    marcas = Marca.objects.all()
-    for v in veiculos:
-        for m in marcas:
-            if v['marca'] == m.id:
-                v['marca'] = m.nome
-    return veiculos
